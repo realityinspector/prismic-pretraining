@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.DS_Store
+**/.env
+.venv/
+*.egg-info/
+nohup.out
+node_modules/
+*.stl
+prism/results/*.log
+prism/results/.*_done
