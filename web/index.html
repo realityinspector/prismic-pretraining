@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PRISM: 3.33x Faster GPT-2 Training from Scratch</title>
+<title>Prism — Prismic Pretraining Acceleration</title>
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -43,16 +43,52 @@ body {
   padding: 0 32px;
 }
 
+/* ── TOP BAR ── */
+.top-bar {
+  width: 100%;
+  padding: 10px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  background: rgba(10, 14, 26, 0.9);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+}
+
+.top-bar a {
+  color: var(--text-dim);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.top-bar a:hover {
+  color: var(--blue-bright);
+  border-bottom-color: var(--blue);
+}
+
+.top-bar-sep {
+  color: var(--border);
+}
+
 /* ── HERO ── */
 .hero {
-  min-height: 100vh;
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   position: relative;
-  padding: 60px 32px 80px;
+  padding: 60px 32px 48px;
 }
 
 .hero::after {
@@ -65,20 +101,19 @@ body {
   background: linear-gradient(90deg, transparent, var(--blue), transparent);
 }
 
-.hero-counter {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: clamp(5rem, 14vw, 10rem);
-  font-weight: 700;
+.hero-title {
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-weight: 800;
   letter-spacing: -0.04em;
   background: linear-gradient(135deg, #93c5fd 0%, #60a5fa 40%, #a78bfa 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  line-height: 1;
+  line-height: 1.1;
   margin-bottom: 8px;
   position: relative;
 }
 
-.hero-counter::after {
+.hero-title::after {
   content: '';
   position: absolute;
   inset: -20px -40px;
@@ -87,55 +122,69 @@ body {
   z-index: -1;
 }
 
-.hero-subtitle {
-  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-  font-weight: 300;
-  color: var(--text-dim);
-  margin-bottom: 32px;
-  letter-spacing: -0.01em;
-}
-
-.hero-desc {
-  font-size: clamp(0.9rem, 1.8vw, 1.05rem);
-  color: var(--text-muted);
-  max-width: 640px;
-  line-height: 1.7;
-  margin-bottom: 48px;
-}
-
-.hero-stats {
-  display: flex;
-  justify-content: center;
-  gap: 2px;
-  flex-wrap: wrap;
-}
-
-.hero-stat {
-  padding: 10px 24px;
+.hero-tagline {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.82rem;
-  color: var(--text-dim);
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  white-space: nowrap;
-}
-
-.hero-stat:first-child { border-radius: 6px 0 0 6px; }
-.hero-stat:last-child { border-radius: 0 6px 6px 0; }
-
-.hero-stat strong {
-  color: var(--blue-bright);
-  font-weight: 600;
-}
-
-.hero-method-name {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
+  font-size: clamp(0.85rem, 1.8vw, 1.05rem);
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--text-muted);
-  margin-bottom: 16px;
-  opacity: 0.7;
+  margin-bottom: 32px;
+}
+
+.hero-explain {
+  font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+  color: var(--text-dim);
+  max-width: 720px;
+  line-height: 1.8;
+  margin-bottom: 48px;
+  font-weight: 300;
+}
+
+.hero-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  max-width: 680px;
+  width: 100%;
+  margin-bottom: 32px;
+}
+
+.hero-metric {
+  padding: 20px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  text-align: center;
+}
+
+.hero-metric:first-child { border-radius: 8px 0 0 8px; }
+.hero-metric:last-child { border-radius: 0 8px 8px 0; }
+
+.hero-metric-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--blue-bright);
+  line-height: 1.2;
+}
+
+.hero-metric-label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* ── RESEARCH BANNER ── */
+.research-banner {
+  display: inline-block;
+  padding: 8px 24px;
+  border-radius: 999px;
+  background: rgba(167, 139, 250, 0.08);
+  border: 1px solid rgba(167, 139, 250, 0.25);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--purple-bright);
+  letter-spacing: 0.02em;
+  margin-top: 8px;
 }
 
 /* ── SECTIONS ── */
@@ -186,12 +235,105 @@ h2 {
   border-radius: 8px;
   padding: 24px;
   position: relative;
-  overflow-x: auto;
+  overflow: visible;
 }
 
 .chart-wrap svg {
   display: block;
   margin: 0 auto;
+  overflow: visible;
+}
+
+/* ── INDUSTRY CONTEXT SECTION ── */
+.context-section {
+  padding: 64px 0;
+  border-top: 1px solid var(--border);
+}
+
+.context-content {
+  max-width: 760px;
+}
+
+.context-content p {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text-dim);
+  margin-bottom: 24px;
+}
+
+.context-techniques {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.context-technique {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.context-technique h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.context-technique p {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--text-dim);
+  margin-bottom: 0;
+}
+
+.context-technique em {
+  color: var(--blue-bright);
+  font-style: italic;
+}
+
+/* ── USE CASES SECTION ── */
+.use-cases-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.use-case-card {
+  background: var(--bg-card);
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 28px 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.use-case-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(96, 165, 250, 0.25), rgba(167, 139, 250, 0.15), rgba(96, 165, 250, 0.05));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.use-case-card h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.use-case-card p {
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  line-height: 1.6;
 }
 
 /* ── PIPELINE STEPS ── */
@@ -350,6 +492,7 @@ h2 {
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 20px;
+  overflow: visible;
 }
 
 .fingerprint-card h4 {
@@ -359,6 +502,10 @@ h2 {
   color: var(--text-dim);
   margin-bottom: 12px;
   letter-spacing: 0.05em;
+}
+
+.fingerprint-card svg {
+  overflow: visible;
 }
 
 /* ── SINGULAR VALUE BAR CHART ── */
@@ -376,16 +523,30 @@ h2 {
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 32px;
+  overflow: visible;
+}
+
+.stairclimb-wrap svg {
+  overflow: visible;
 }
 
 /* ── FOOTER ── */
 footer {
   text-align: center;
-  padding: 32px 0 48px;
+  padding: 40px 0 56px;
   border-top: 1px solid var(--border);
   color: var(--text-muted);
-  font-size: 0.78rem;
+  font-size: 0.82rem;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.8;
+}
+
+footer .footer-title {
   font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin-bottom: 8px;
 }
 
 footer a {
@@ -397,6 +558,13 @@ footer a {
 footer a:hover {
   color: var(--blue-bright);
   border-color: var(--blue);
+}
+
+footer .footer-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 12px;
 }
 
 /* ── SVG STYLES ── */
@@ -453,31 +621,86 @@ footer a:hover {
   .svd-row { gap: 8px; }
   .init-row { flex-direction: column; align-items: center; }
   .fingerprint-grid { grid-template-columns: 1fr; }
-  .hero-stats { flex-direction: column; align-items: center; }
-  .hero-stat { border-radius: 0 !important; }
-  .hero-stat:first-child { border-radius: 6px 6px 0 0 !important; }
-  .hero-stat:last-child { border-radius: 0 0 6px 6px !important; }
+  .hero-metrics { grid-template-columns: repeat(2, 1fr); }
+  .hero-metric { border-radius: 0 !important; }
+  .hero-metric:first-child { border-radius: 8px 0 0 0 !important; }
+  .hero-metric:nth-child(2) { border-radius: 0 8px 0 0 !important; }
+  .hero-metric:nth-child(3) { border-radius: 0 0 0 8px !important; }
+  .hero-metric:last-child { border-radius: 0 0 8px 0 !important; }
+  .context-techniques { grid-template-columns: 1fr; }
+  .use-cases-grid { grid-template-columns: 1fr; }
+  .top-bar { gap: 12px; font-size: 0.68rem; }
   h2 { font-size: 1.25rem; }
 }
 </style>
 </head>
 <body>
 
+<!-- TOP BAR -->
+<div class="top-bar">
+  <span>GitHub: <a href="https://github.com/realityinspector/prismic-pretraining" target="_blank">realityinspector/prismic-pretraining</a></span>
+  <span class="top-bar-sep">|</span>
+  <span>Creator: <a href="https://x.com/seanmcdonaldxyz" target="_blank">@seanmcdonaldxyz</a></span>
+  <span class="top-bar-sep">|</span>
+  <span>Status: Alpha Research</span>
+</div>
+
 <!-- 1. HERO -->
 <div class="hero">
-  <div class="hero-method-name">PRISM &mdash; Prismic Pretraining Acceleration</div>
-  <div class="hero-counter" id="hero-counter">1.0x</div>
-  <p class="hero-subtitle">faster convergence on GPT-2 training from scratch</p>
-  <p class="hero-desc">
-    By transferring just 32 numbers &mdash; the compressed spectral fingerprint of a trained model's weight structure &mdash; to a fresh random initialization
+  <div class="hero-title">Prism</div>
+  <div class="hero-tagline">Prismic pretraining acceleration</div>
+  <p class="hero-explain">
+    Training a large language model from scratch is expensive &mdash; it requires massive compute to learn which patterns in language matter most. What if you could transfer just the structural fingerprint of an already-trained model's knowledge to a brand new one? Prism does exactly that: it extracts the spectral geometry of trained weights, compresses it to just 32 numbers, and uses it to give fresh models a dramatic head start.
   </p>
-  <div class="hero-stats">
-    <div class="hero-stat"><strong>32</strong>&ensp;DCT coefficients</div>
-    <div class="hero-stat"><strong>50%</strong>&ensp;directional alignment</div>
-    <div class="hero-stat"><strong>2x</strong>&ensp;learning rate</div>
-    <div class="hero-stat"><strong>124M</strong>&ensp;parameters</div>
+  <div class="hero-metrics">
+    <div class="hero-metric">
+      <div class="hero-metric-value">3.33x</div>
+      <div class="hero-metric-label">faster convergence</div>
+    </div>
+    <div class="hero-metric">
+      <div class="hero-metric-value">32</div>
+      <div class="hero-metric-label">numbers transferred</div>
+    </div>
+    <div class="hero-metric">
+      <div class="hero-metric-value">124M</div>
+      <div class="hero-metric-label">parameter model (GPT-2)</div>
+    </div>
+    <div class="hero-metric">
+      <div class="hero-metric-value">27</div>
+      <div class="hero-metric-label">experiments validated</div>
+    </div>
+  </div>
+  <div class="research-banner">
+    Alpha research &mdash; unfunded indie findings. Not peer-reviewed. Reproducible. Apache 2.0.
   </div>
 </div>
+
+<!-- INDUSTRY CONTEXT -->
+<section class="context-section" id="industry-context">
+  <div class="container">
+    <div class="section-label">Why This Matters</div>
+    <h2>The Problem with Training from Scratch</h2>
+    <div class="context-content">
+      <p>
+        Standard initialization (Xavier, Kaiming, orthogonal) treats all directions in weight space as equally important. This is mathematically convenient but ignores everything we know about what trained models look like.
+      </p>
+      <p>
+        Prism's insight: trained models develop a characteristic spectral fingerprint &mdash; a specific pattern of which directions carry the most energy. This pattern is remarkably compressible (32 numbers) and transferable.
+      </p>
+      <p style="color: var(--text); font-weight: 500; margin-bottom: 16px;">Two core techniques:</p>
+      <div class="context-techniques">
+        <div class="context-technique">
+          <h4>Spectral Imprint</h4>
+          <p>Transfers <em>what matters</em> &mdash; the singular value distribution. Reshapes a fresh model's energy landscape to match the structure that trained models converge to.</p>
+        </div>
+        <div class="context-technique">
+          <h4>EigenTransfer</h4>
+          <p>Transfers <em>which directions matter</em> &mdash; partial singular vector alignment. Blends pretrained directional structure into random bases without copying learned features.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- 2. CONVERGENCE CHART -->
 <section id="convergence">
@@ -485,7 +708,7 @@ footer a:hover {
     <div class="section-label">The Result</div>
     <h2>Convergence Comparison</h2>
     <p class="section-desc">
-      Validation perplexity on WikiText-2 during the first 1000 training steps. The full PRISM method reaches PPL 572 at step 750 &mdash; 3.33x better than standard orthogonal initialization.
+      Validation perplexity on WikiText-2 during the first 1000 training steps. The full Prism method reaches PPL 572 at step 750 &mdash; 3.33x better than standard orthogonal initialization.
     </p>
     <div class="chart-wrap" id="convergence-chart-wrap">
       <div id="convergence-chart"></div>
@@ -594,10 +817,43 @@ footer a:hover {
   </div>
 </section>
 
+<!-- USE CASES -->
+<section id="use-cases">
+  <div class="container">
+    <div class="section-label">Practical Impact</div>
+    <h2>Applications</h2>
+    <p class="section-desc">
+      Prism's spectral transfer techniques open new possibilities for how we initialize and train neural networks.
+    </p>
+    <div class="use-cases-grid">
+      <div class="use-case-card">
+        <h3>Accelerate LLM Pretraining</h3>
+        <p>Reduce early training compute by 3x+ when training GPT-class models from scratch. The spectral fingerprint from a smaller trained model can bootstrap a larger one.</p>
+      </div>
+      <div class="use-case-card">
+        <h3>Cross-Architecture Transfer</h3>
+        <p>Transfer spectral structure between model families without transferring weights. Open research question: how far does the fingerprint generalize?</p>
+      </div>
+      <div class="use-case-card">
+        <h3>Training Curriculum Design</h3>
+        <p>Use spectral analysis to understand which weight structures emerge during training, informing architecture design and training schedules.</p>
+      </div>
+      <div class="use-case-card">
+        <h3>Efficient Fine-Tuning Initialization</h3>
+        <p>Related techniques (PiSSA, DoRA) already use SVD decomposition for fine-tuning. Prism extends this to from-scratch training.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- 9. FOOTER -->
 <footer>
   <div class="container">
-    GPT-2 small (124M) on WikiText-2 &middot; Apple M1 MPS &middot; <a href="https://github.com/realityinspector/teeny-tiny-t9" target="_blank">github.com/realityinspector/teeny-tiny-t9</a>
+    <div class="footer-title">Prism &mdash; Prismic Pretraining Acceleration</div>
+    <div>Created by Sean McDonald (<a href="https://x.com/seanmcdonaldxyz" target="_blank">@seanmcdonaldxyz</a>)</div>
+    <div>GitHub: <a href="https://github.com/realityinspector/prismic-pretraining" target="_blank">realityinspector/prismic-pretraining</a></div>
+    <div>Apache 2.0 License | Alpha Research Stage</div>
+    <div class="footer-meta">GPT-2 small (124M) &middot; WikiText-2 &middot; Apple M1 MPS</div>
   </div>
 </footer>
 
@@ -679,7 +935,8 @@ function drawHeatmap(container, matrix, size, cellSize, gap) {
 
   const svg = d3.select(wrapper).append('svg')
     .attr('width', totalSize)
-    .attr('height', totalSize);
+    .attr('height', totalSize)
+    .style('overflow', 'visible');
 
   for (let r = 0; r < n; r++) {
     for (let c = 0; c < n; c++) {
@@ -702,33 +959,10 @@ function drawHeatmap(container, matrix, size, cellSize, gap) {
   return wrapper;
 }
 
-// ────────────────────── HERO COUNTER ANIMATION ──────────────────────
-(function() {
-  const counterEl = document.getElementById('hero-counter');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        d3.select(counterEl)
-          .transition()
-          .duration(2000)
-          .ease(d3.easeCubicOut)
-          .tween('text', function() {
-            const i = d3.interpolateNumber(1.0, 3.33);
-            return function(t) {
-              this.textContent = i(t).toFixed(2) + 'x';
-            };
-          });
-        observer.disconnect();
-      }
-    });
-  }, {threshold: 0.5});
-  observer.observe(counterEl);
-})();
-
 // ────────────────────── CONVERGENCE CHART ──────────────────────
 (function() {
   const container = document.getElementById('convergence-chart');
-  const margin = {top: 32, right: 180, bottom: 56, left: 72};
+  const margin = {top: 32, right: 180, bottom: 66, left: 84};
   const fullW = Math.min(1152, window.innerWidth - 64);
   const width = fullW - margin.left - margin.right;
   const height = 400 - margin.top - margin.bottom;
@@ -736,6 +970,7 @@ function drawHeatmap(container, matrix, size, cellSize, gap) {
   const svg = d3.select(container).append('svg')
     .attr('width', width + margin.left + margin.right)
     .attr('height', height + margin.top + margin.bottom)
+    .style('overflow', 'visible')
     .append('g')
     .attr('transform', `translate(${margin.left},${margin.top})`);
 
@@ -755,7 +990,7 @@ function drawHeatmap(container, matrix, size, cellSize, gap) {
     .attr('transform', `translate(0,${height})`)
     .call(d3.axisBottom(x).tickValues([250, 500, 750, 1000]).tickFormat(d3.format('d')))
     .append('text')
-    .attr('x', width / 2).attr('y', 44)
+    .attr('x', width / 2).attr('y', 48)
     .attr('fill', '#94a3b8')
     .attr('text-anchor', 'middle')
     .attr('font-size', '12px')
@@ -765,7 +1000,7 @@ function drawHeatmap(container, matrix, size, cellSize, gap) {
     .call(d3.axisLeft(y).ticks(6))
     .append('text')
     .attr('transform', 'rotate(-90)')
-    .attr('x', -height / 2).attr('y', -52)
+    .attr('x', -height / 2).attr('y', -62)
     .attr('fill', '#94a3b8')
     .attr('text-anchor', 'middle')
     .attr('font-size', '12px')
@@ -917,7 +1152,7 @@ function drawHeatmap(container, matrix, size, cellSize, gap) {
   const m1 = document.getElementById('mini-extract');
   const w1 = m1.clientWidth || 200;
   const h1 = 60;
-  const svg1 = d3.select(m1).append('svg').attr('width', w1).attr('height', h1);
+  const svg1 = d3.select(m1).append('svg').attr('width', w1).attr('height', h1).style('overflow', 'visible');
   const data1 = DATA.pretrainedSV.filter((_, i) => i % 5 === 0);
   const x1 = d3.scaleLinear().domain([0, data1.length - 1]).range([4, w1 - 4]);
   const y1 = d3.scaleLinear().domain([0, 1]).range([h1 - 4, 4]);
@@ -930,7 +1165,7 @@ function drawHeatmap(container, matrix, size, cellSize, gap) {
   const m2 = document.getElementById('mini-shape');
   const w2 = m2.clientWidth || 200;
   const h2 = 60;
-  const svg2 = d3.select(m2).append('svg').attr('width', w2).attr('height', h2);
+  const svg2 = d3.select(m2).append('svg').attr('width', w2).attr('height', h2).style('overflow', 'visible');
   const half = w2 / 2 - 8;
   // Flat bars
   for (let i = 0; i < 8; i++) {
@@ -950,23 +1185,23 @@ function drawHeatmap(container, matrix, size, cellSize, gap) {
   const m3 = document.getElementById('mini-train');
   const w3 = m3.clientWidth || 200;
   const h3 = 60;
-  const svg3 = d3.select(m3).append('svg').attr('width', w3).attr('height', h3);
+  const svg3 = d3.select(m3).append('svg').attr('width', w3).attr('height', h3).style('overflow', 'visible');
   const pts = 20;
   const xS = d3.scaleLinear().domain([0, pts - 1]).range([4, w3 - 4]);
   const yS = d3.scaleLinear().domain([0, 1]).range([h3 - 4, 4]);
   // Baseline stays high
   const baseLine = Array.from({length: pts}, (_, i) => 0.9 - i * 0.005);
-  // PRISM drops fast
-  const sipeLine = Array.from({length: pts}, (_, i) => 0.9 - (i / (pts - 1)) * 0.65);
+  // Prism drops fast
+  const prismLine = Array.from({length: pts}, (_, i) => 0.9 - (i / (pts - 1)) * 0.65);
   const lineGen = d3.line().x((d, i) => xS(i)).y(d => yS(d)).curve(d3.curveMonotoneX);
   svg3.append('path').datum(baseLine).attr('d', lineGen).attr('fill', 'none').attr('stroke', '#f87171').attr('stroke-width', 1.5).attr('stroke-dasharray', '4,3');
-  svg3.append('path').datum(sipeLine).attr('d', lineGen).attr('fill', 'none').attr('stroke', '#60a5fa').attr('stroke-width', 1.5);
+  svg3.append('path').datum(prismLine).attr('d', lineGen).attr('fill', 'none').attr('stroke', '#60a5fa').attr('stroke-width', 1.5);
 })();
 
 // ────────────────────── SPECTRAL COMPARISON CHART ──────────────────────
 (function() {
   const container = document.getElementById('spectral-chart');
-  const margin = {top: 32, right: 160, bottom: 56, left: 72};
+  const margin = {top: 32, right: 160, bottom: 66, left: 84};
   const fullW = Math.min(1152, window.innerWidth - 64);
   const width = fullW - margin.left - margin.right;
   const height = 440 - margin.top - margin.bottom;
@@ -974,6 +1209,7 @@ function drawHeatmap(container, matrix, size, cellSize, gap) {
   const svg = d3.select(container).append('svg')
     .attr('width', width + margin.left + margin.right)
     .attr('height', height + margin.top + margin.bottom)
+    .style('overflow', 'visible')
     .append('g')
     .attr('transform', `translate(${margin.left},${margin.top})`);
 
@@ -997,7 +1233,7 @@ function drawHeatmap(container, matrix, size, cellSize, gap) {
     .call(d3.axisBottom(x).ticks(10))
     .append('text')
     .attr('x', width / 2)
-    .attr('y', 44)
+    .attr('y', 48)
     .attr('fill', '#94a3b8')
     .attr('text-anchor', 'middle')
     .attr('font-size', '12px')
@@ -1009,7 +1245,7 @@ function drawHeatmap(container, matrix, size, cellSize, gap) {
     .append('text')
     .attr('transform', 'rotate(-90)')
     .attr('x', -height / 2)
-    .attr('y', -52)
+    .attr('y', -62)
     .attr('fill', '#94a3b8')
     .attr('text-anchor', 'middle')
     .attr('font-size', '12px')
@@ -1160,7 +1396,8 @@ function drawHeatmap(container, matrix, size, cellSize, gap) {
   const svBarW = 100;
   const svgSig = d3.select(svContainer).append('svg')
     .attr('width', svBarW)
-    .attr('height', svBarH);
+    .attr('height', svBarH)
+    .style('overflow', 'visible');
 
   const topSV = DATA.pretrainedSV.slice(0, 16);
   const barH = (svBarH - (15 * gap)) / 16;
@@ -1203,7 +1440,7 @@ function drawHeatmap(container, matrix, size, cellSize, gap) {
     {key: 'embedding', label: 'Token Embedding', color: '#fbbf24'}
   ];
 
-  const margin = {top: 8, right: 12, bottom: 32, left: 46};
+  const margin = {top: 8, right: 12, bottom: 42, left: 56};
   const w = 240;
   const h = 120;
 
@@ -1216,6 +1453,7 @@ function drawHeatmap(container, matrix, size, cellSize, gap) {
     const svg = d3.select(card).append('svg')
       .attr('width', w + margin.left + margin.right)
       .attr('height', h + margin.top + margin.bottom)
+      .style('overflow', 'visible')
       .append('g')
       .attr('transform', `translate(${margin.left},${margin.top})`);
 
@@ -1301,7 +1539,8 @@ function drawHeatmap(container, matrix, size, cellSize, gap) {
 
   const svCompSvg = d3.select(svCompContainer).append('svg')
     .attr('width', svCompW)
-    .attr('height', svCompH + 28);
+    .attr('height', svCompH + 28)
+    .style('overflow', 'visible');
 
   const barH2 = (svCompH - 15 * gap) / 16;
   const halfW = (svCompW - 28) / 2;
@@ -1406,7 +1645,7 @@ function drawHeatmap(container, matrix, size, cellSize, gap) {
 // ────────────────────── STAIRCLIMB CHART ──────────────────────
 (function() {
   const container = document.getElementById('stairclimb-chart');
-  const margin = {top: 16, right: 80, bottom: 32, left: 260};
+  const margin = {top: 16, right: 80, bottom: 42, left: 270};
   const barHeight = 36;
   const barGap = 8;
   const n = DATA.stairclimb.length;
@@ -1416,6 +1655,7 @@ function drawHeatmap(container, matrix, size, cellSize, gap) {
   const svg = d3.select(container).append('svg')
     .attr('width', width + margin.left + margin.right)
     .attr('height', height + margin.top + margin.bottom)
+    .style('overflow', 'visible')
     .append('g')
     .attr('transform', `translate(${margin.left},${margin.top})`);
 
@@ -1429,7 +1669,7 @@ function drawHeatmap(container, matrix, size, cellSize, gap) {
       .attr('stroke', '#1a2236')
       .attr('stroke-dasharray', '2,4');
     svg.append('text')
-      .attr('x', x(v)).attr('y', height + 20)
+      .attr('x', x(v)).attr('y', height + 24)
       .attr('text-anchor', 'middle')
       .attr('fill', '#64748b')
       .attr('font-size', '10px')
