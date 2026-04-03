@@ -67,7 +67,7 @@ python -m prism.stairclimb --list
 
 Open [web/index.html](web/index.html) for an interactive D3.js
 visualization of the method and results, or see the
-[live deployment](https://prismic-pretraining.up.railway.app).
+[live deployment](https://affectionate-creativity-production-8f89.up.railway.app).
 
 ## How It Works
 
