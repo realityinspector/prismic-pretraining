@@ -155,8 +155,10 @@ def train(config: TrainConfig, init_fn=None, init_name="default",
         if device == "cuda":
             torch.cuda.manual_seed_all(config.seed)
 
-    # Install safety infrastructure
-    set_process_memory_limit(max_gb=12.0)
+    # Install safety infrastructure (skip memory limit on CUDA — RLIMIT_AS
+    # is enforced on Linux and kills PyTorch's GPU memory mapping)
+    if device != "cuda":
+        set_process_memory_limit(max_gb=12.0)
     prev_handler = install_signal_handlers()
 
     if verbose:
